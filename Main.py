@@ -9,6 +9,9 @@ from Inventory import Inventory
 from TextColors import *
 from TextUtils import *
 
+# ------------------
+# ---- Products ----
+# ------------------
 def listProducts(inventory:Inventory):
 	print("Listing products")
 	products = inventory.getProducts()
@@ -45,6 +48,7 @@ def updateProduct(inventory:Inventory):
 	product = Product(id, name, buyPrice, sellPrice)
 	inventory.updateProduct(product)
 	input()
+
 def deleteProduct(inventory:Inventory):
 	print("Deleting product")
 	id = input("Product ID: ")
@@ -53,6 +57,7 @@ def deleteProduct(inventory:Inventory):
 	inventory.deleteProduct(id)
 
 	input()
+
 def printProductDetails(inventory:Inventory):
 	print("Printing product details")
 	id = input("Product ID: ")
@@ -74,6 +79,99 @@ def printProductDetails(inventory:Inventory):
 
 	input()
 
+# -----------------
+# ---- Clients ----
+# -----------------
+def listClients(inventory:Inventory):
+    print("Listing clients")
+    clients = inventory.getClients()
+    for client in clients:
+        print(client)
+
+def addClient(inventory:Inventory):
+    print("Adding new client")
+    name = input("Name: ")
+    email = input("Email: ")
+    phone = input("Phone: ")
+    client = Client(0, name, email, phone)
+    inventory.addClient(client)
+
+def updateClient(inventory:Inventory):
+    print("Updating client")
+    id = input("Client ID: ")
+    name = input("Name: ")
+    email = input("Email: ")
+    phone = input("Phone: ")
+    client = Client(id, name, email, phone)
+    inventory.updateClient(client)
+
+def deleteClient(inventory:Inventory):
+    print("Deleting client")
+    id = input("Client ID: ")
+    inventory.deleteClient(id)
+
+def printClientDetails(inventory:Inventory):
+    print("Printing client details")
+    id = input("Client ID: ")
+    client = inventory.getClientById(id)
+    print(client)
+    print("Sales:")
+    sales = inventory.getSalesByClient(id)
+    for sale in sales:
+        print(sale)
+
+# ---------------------
+# ----- Suppliers -----
+# ---------------------
+def listSuppliers(inventory:Inventory):
+	print("Listing suppliers")
+	suppliers = inventory.getSuppliers()
+	for supplier in suppliers:
+		print(supplier)
+
+def addSupplier(inventory:Inventory):
+	print("Adding new supplier")
+	name = input("Name: ")
+	email = input("Email: ")
+	phone = input("Phone: ")
+	supplier = Supplier(0, name, email, phone)
+	inventory.addSupplier(supplier)
+	input()
+
+def updateSupplier(inventory:Inventory):
+	print("Updating supplier")
+	id = input("Supplier ID: ")
+	name = input("Name: ")
+	email = input("Email: ")
+	phone = input("Phone: ")
+	supplier = Supplier(id, name, email, phone)
+	inventory.updateSupplier(supplier)
+
+def deleteSupplier(inventory:Inventory):
+	print("Deleting supplier")
+	id = input("Supplier ID: ")
+	inventory.deleteSupplier(id)
+
+def printSupplierDetails(inventory:Inventory):
+	print("Printing supplier details")
+	id = input("Supplier ID: ")
+	supplier = inventory.getSupplierById(id)
+	print(supplier)
+
+	print("Purchases:")
+	purchases = inventory.getPurchasesBySupplier(id)
+	for purchase in purchases:
+		print(purchase)
+
+# -----------------
+# ----- Sales -----
+# -----------------
+def listSales(inventory:Inventory):
+	print("Listing sales")
+	sales = inventory.getSales()
+	for sale in sales:
+		print(sale)
+
 def addSale(inventory:Inventory):
 	print("Performing Sale")
 	date = date.today().strftime("%d/%m/%Y")
@@ -83,13 +181,17 @@ def addSale(inventory:Inventory):
 	discount = float(input("Discount: "))
 	sale = Sale(0, date, clientId, productId, quantity, discount)
 	inventory.addSale(sale)
-	input()
 
 def deleteSale(inventory:Inventory):
-	print("Deleting sale")
+	print("Canceling sale")
 	id = input("Sale ID: ")
 	inventory.deleteSale(id)
-	
+
+def listPurchases(inventory:Inventory):
+	print("Listing purchases")
+	purchases = inventory.getPurchases()
+	for purchase in purchases:
+		print(purchase)
 	input()
 
 def addPurchase(inventory:Inventory):
@@ -106,25 +208,7 @@ def addPurchase(inventory:Inventory):
 def deletePurchase(inventory:Inventory):
 	print("Deleting purchase")
 	id = input("Purchase ID: ")
-	
-	input()
-
-def addClient(inventory:Inventory):
-	print("Adding new client")
-	name = input("Name: ")
-	email = input("Email: ")
-	phone = input("Phone: ")
-	client = Client(0, name, email, phone)
-	inventory.addClient(client)
-	input()
-
-def addSupplier(inventory:Inventory):
-	print("Adding new supplier")
-	name = input("Name: ")
-	email = input("Email: ")
-	phone = input("Phone: ")
-	supplier = Supplier(0, name, email, phone)
-	inventory.addSupplier(supplier)
+	inventory.deletePurchase(id)
 	input()
 
 def mainMenu(inventory:Inventory):
@@ -182,6 +266,26 @@ def mainMenu(inventory:Inventory):
 		elif option == "03": updateProduct(inventory)
 		elif option == "04": deleteProduct(inventory)
 		elif option == "05": printProductDetails(inventory)
+
+		elif option == "11": listClients(inventory)
+		elif option == "12": addClient(inventory)
+		elif option == "13": updateClient(inventory)
+		elif option == "14": deleteClient(inventory)
+		elif option == "15": printClientDetails(inventory)
+
+		elif option == "21": listSuppliers(inventory)
+		elif option == "22": addSupplier(inventory)
+		elif option == "23": updateSupplier(inventory)
+		elif option == "24": deleteSupplier(inventory)
+		elif option == "25": printSupplierDetails(inventory)
+
+		elif option == "31": listSales(inventory)
+		elif option == "32": addSale(inventory)
+		elif option == "33": deleteSale(inventory)
+
+		elif option == "41": listPurchases(inventory)
+		elif option == "42": addPurchase(inventory)
+		elif option == "43": deletePurchase(inventory)
 
 inventory = Inventory()
 mainMenu(inventory)
