@@ -5,7 +5,7 @@ class Product:
 		self.buyPrice = buyPrice
 		self.sellPrice = sellPrice
 	
-	def fromString(self, string):
+	def fromString(string):
 		id, name, buyPrice, sellPrice = string.split(",")
 		return Product(id, name, float(buyPrice), float(sellPrice))
 	

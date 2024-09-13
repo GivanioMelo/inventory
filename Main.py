@@ -13,11 +13,19 @@ from TextUtils import *
 # ---- Products ----
 # ------------------
 def listProducts(inventory:Inventory):
-	print("Listing products")
+	clearScreen()
+	drawBox(1,1,120,3,BLUE)	
+	gotoxy(50,2); print("Listing products")
+
 	products = inventory.getProducts()
-	for product in products:
-		print(product)
-	input()
+	h = len(products) + 3
+
+	drawBox(1,4,120,h,BLUE)
+	gotoxy(2,5); printBrightBlue(f"{'Id':5} | {'Name':50} |    {'Buy price':10} |    {'Sell Price':10}")
+	for i in range(len(products)):
+		p:Product = products[i]
+		gotoxy(2,6+i); printBrightBlue(f"{p.id:5} | {p.name:50} | R$ {p.buyPrice:10.2f} | R$ {p.sellPrice:10.2f}")
+	gotoxy(1,4+h+1); input()
 
 def addProduct(inventory:Inventory):
 	clearScreen()
@@ -261,6 +269,7 @@ def mainMenu(inventory:Inventory):
 		gotoxy(2,15); option = input("Input an option: ")
 
 		if option == "0" or option == "00": break
+
 		elif option == "01": listProducts(inventory)
 		elif option == "02": addProduct(inventory)
 		elif option == "03": updateProduct(inventory)

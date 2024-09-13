@@ -5,7 +5,7 @@ class Sale(Transaction):
 		super().__init__(id, date, productId, quantity, discount)
 		self.clientId = clientId
 	
-	def fromString(self, string):
+	def fromString(string):
 		id, date, clientId, productId, quantity, discount = string.split(",")
 		return Sale(id, date, clientId, productId, float(quantity), float(discount))
 	

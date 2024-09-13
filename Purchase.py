@@ -4,7 +4,7 @@ class Purchase(Transaction):
 	def __init__(self, id, date, supplierId, productId, quantity, discount):
 		super().__init__(id, date, productId, quantity, discount)
 		self.supplierId = supplierId
-	def fromString(self, string):
+	def fromString(string):
 		id, date, supplierId, productId, quantity, discount = string.split(",")
 		return Purchase(id, date, supplierId, productId, float(quantity), float(discount))
 	
