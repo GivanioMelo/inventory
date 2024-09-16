@@ -21,6 +21,16 @@ class ProductFileRepository(FileRepository):
 			f.write(str(product) + "\n")
 	
 	def update(self, product):
+		# products = self.getAll()
+		# for product in products:
+		# 	if product.id == data.id:
+		# 		product.name = data.name
+		# 		product.buyPrice = data.buyPrice
+		# 		product.sellPrice = data.sellPrice
+		# 		break
+		# with open(self.fileName, "w") as f:
+		# 	for product in products:
+		# 		f.write(str(product) + "\n")    
 		self.updateLine(product.id, str(product))
 
 	def delete(self, id):

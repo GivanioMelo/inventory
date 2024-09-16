@@ -9,17 +9,32 @@ from Inventory import Inventory
 from TextColors import *
 from TextUtils import *
 
+def printTitle(text:str, boxColor = WHITE, textColor = WHITE):
+	x = 60 - (int(len(text)/2))
+	drawBox(1,1,120,3,boxColor)
+	gotoxy(x,2)
+	print(text)
+
+def drawEditField(text:str, line:int, boxColor = WHITE, textColor = WHITE):
+	drawBox(1,line,20,3,boxColor)
+	drawBox(21,line,100,3,boxColor)
+	gotoxy(2,line+1)
+	printColored(text,textColor)
+
+def drawInfoBox(text:str = "", textColor = WHITE):
+	drawBox(1,27,120,3,DARK_GRAY)
+	gotoxy(2,28)
+	printColored(text, textColor)
+
 # ------------------
 # ---- Products ----
 # ------------------
 def listProducts(inventory:Inventory):
 	clearScreen()
-	drawBox(1,1,120,3,BLUE)	
-	gotoxy(50,2); print("Listing products")
+	printTitle(" Listing products ", BLUE, WHITE)
 
 	products = inventory.getProducts()
 	h = len(products) + 3
-
 	drawBox(1,4,120,h,BLUE)
 	gotoxy(2,5); printBrightBlue(f"{'Id':5} | {'Name':50} |    {'Buy price':10} |    {'Sell Price':10}")
 	for i in range(len(products)):
@@ -29,15 +44,11 @@ def listProducts(inventory:Inventory):
 
 def addProduct(inventory:Inventory):
 	clearScreen()
-	drawBox(1,1,120,3,BLUE)	
-	drawBox(1,4,20,3,BLUE)	; drawBox(21,4,100,3,BLUE)
-	drawBox(1,7,20,3,BLUE)	; drawBox(21,7,100,3,BLUE)
-	drawBox(1,10,20,3,BLUE)	; drawBox(21,10,100,3,BLUE)
-	
-	gotoxy(50,2); print("Adding new product")
-	gotoxy(2,5);  print("Name:")
-	gotoxy(2,8);  print("Buy Price (R$): ")
-	gotoxy(2,11); print("Sell Price (R$): ")
+	printTitle(" Adding new product ", BLUE, WHITE)
+	drawEditField("Name: ", line=4, boxColor=BLUE, textColor=WHITE)
+	drawEditField("Buy Price (R$): ", line=7, boxColor=BLUE, textColor=WHITE)
+	drawEditField("Sell Price (R$): ", line=10, boxColor=BLUE, textColor=WHITE)
+	drawInfoBox()
 
 	gotoxy(22,5);  name = input()
 	gotoxy(22,8);  buyPrice = float(input())
@@ -48,16 +59,40 @@ def addProduct(inventory:Inventory):
 	input()
 
 def updateProduct(inventory:Inventory):
-	print("Updating product")
-	id = input("Product ID: ")
-	name = input("Name: ")
-	buyPrice = float(input("Buy price: "))
-	sellPrice = float(input("Sell price: "))
+	clearScreen()
+	drawBox(1,27,120,3,DARK_GRAY)
+
+	printTitle(" Updating product ", BLUE, WHITE)
+	drawEditField("Product Id:", line=4, boxColor=BLUE, textColor=WHITE)
+	drawEditField("Name: ", line=7, boxColor=BLUE, textColor=WHITE)
+	drawEditField("Buy price: ", line=10, boxColor=BLUE, textColor=WHITE) 
+	drawEditField("Sell price: ", line=13, boxColor=BLUE, textColor=WHITE)
+
+	productExists = False
+	while not productExists:
+		gotoxy(22,5); id = int(input())
+		selectedProduct = inventory.getProductById(id)
+		if selectedProduct is None:
+			gotoxy(2,28); printRed("Product doesn't exist, please insert a valid id!")
+		else:
+			productExists = True
+			gotoxy(22,8);  printDarkGray(selectedProduct.name)
+			gotoxy(22,11); printDarkGray(f"{selectedProduct.buyPrice:.2f}")
+			gotoxy(22,14); printDarkGray(f"{selectedProduct.sellPrice:.2f}")
+			break
+	gotoxy(22,8);  name = input()
+	gotoxy(22,11); buyPrice = float(input())
+	gotoxy(22,14); sellPrice = float(input())
+	
 	product = Product(id, name, buyPrice, sellPrice)
 	inventory.updateProduct(product)
+
+	gotoxy(2,28); print("Product sucessfully updated! Press ENTER to proceed...")
 	input()
 
 def deleteProduct(inventory:Inventory):
+	drawBox(21,10,100,3,DARK_GRAY)
+
 	print("Deleting product")
 	id = input("Product ID: ")
 	inventory.deleteSalesByProduct(id)
@@ -222,10 +257,9 @@ def deletePurchase(inventory:Inventory):
 def mainMenu(inventory:Inventory):
 	while True:
 		clearScreen()
-		drawBox(1,1,120,3,GREEN)
-		gotoxy(44,2)
-		print("Inventory Management System")
-		
+		printTitle(" Inventory Management System ",GREEN,WHITE)
+		drawInfoBox()
+
 		drawBox(1,4,24,7,BLUE)
 		gotoxy(2,4); print(" Products ")
 		gotoxy(3,5); printBlue("01 - List All ")
@@ -295,6 +329,10 @@ def mainMenu(inventory:Inventory):
 		elif option == "41": listPurchases(inventory)
 		elif option == "42": addPurchase(inventory)
 		elif option == "43": deletePurchase(inventory)
+		
+		else:
+			drawInfoBox("Invalid option, try again!", RED)
+			input()
 
 inventory = Inventory()
 mainMenu(inventory)

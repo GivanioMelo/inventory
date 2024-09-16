@@ -12,6 +12,16 @@ class FileRepository:
 				id = int(lastLine.split(",")[0])
 				return id + 1
 
+	def updateLine(self, id, data):
+		with open(self.fileName, "r") as f:
+			lines = f.readlines()
+			for i in range(len(lines)):
+				if int(lines[i].split(", ")[0]) == id:
+					lines[i] = data + "\n"
+					break
+		with open(self.fileName, "w") as f:
+			f.writelines(lines)
+
 	def getAll(self): pass
 	def saveAll(self, data): pass
 	def add(self, data): pass
