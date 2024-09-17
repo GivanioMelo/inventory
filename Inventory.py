@@ -105,3 +105,11 @@ class Inventory:
 			if purchase.supplierId == supplierId:
 				supplierPurchases.append(purchase)
 		return supplierPurchases
+
+	def getClientById(self, clientId):
+		client = self.clients.getById(clientId)
+		return client
+
+	def getSupplierById(self, supplierId):
+		supplier = self.suppliers.getById(supplierId)
+		return supplier

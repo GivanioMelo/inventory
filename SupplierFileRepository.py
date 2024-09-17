@@ -23,7 +23,7 @@ class SupplierFileRepository(FileRepository):
 			f.write(str(supplier) + "\n")
 
 	def getById(self, id):
-		suppliers = self.getAll() 
+		suppliers = self.getAll()
 		for supplier in suppliers:
 			if supplier.id == id:
 				return supplier

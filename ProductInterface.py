@@ -1,8 +1,10 @@
+from Client import Client
 from Product import Product
 from Purchase import Purchase
 from Sale import Sale
 
 from Inventory import Inventory
+from Supplier import Supplier
 from TextUtils import *
 
 def listProducts(inventory:Inventory):
@@ -119,7 +121,10 @@ def printProductDetails(inventory:Inventory):
 	line += 1
 	for purchase in purchases:
 		gotoxy(5,line)
-		printLightGray(f"[{purchase.id}] {purchase.date}: {purchase.quantity} itens from {purchase.supplierId}([SupplierName]) with {purchase.discount:.2f}% discount")
+		suppliername = ""
+		supplier = inventory.getSupplierById(purchase.supplierId)
+		suppliername = supplier.name
+		printLightGray(f"[{purchase.id}] {purchase.date}: {purchase.quantity} itens from {purchase.supplierId}({suppliername}) with {purchase.discount:.2f}% discount")
 		line+=1
 
 	sales = inventory.getSalesByProduct(id)
@@ -129,6 +134,9 @@ def printProductDetails(inventory:Inventory):
 	line +=1
 	for sale in sales:
 		gotoxy(5,line)
-		printLightGray(f"[{sale.id}] {sale.date}: {sale.quantity} items to {sale.clientId}([ClientName]) with {sale.discount:.2f}% discount")
+		clientName = ""
+		client = inventory.getClientById(sale.clientId)
+		clientName = client.name
+		printLightGray(f"[{sale.id}] {sale.date}: {sale.quantity} items to {sale.clientId}({clientName}) with {sale.discount:.2f}% discount")
 		line += 1
 	input()
