@@ -51,17 +51,33 @@ class Inventory:
 		return productPurchases
 
 	def getTotalSpentByProduct(self, productId):
+		product = self.getProductById(productId)
 		purchases = self.getPurchasesByProduct(productId)
 		total = 0
 		for purchase in purchases:
-			total += purchase.total()
+			total += purchase.total(product.buyPrice)
 		return total
 
-	def getTotalSoldByProduct(self, productId):
+	def getItensPurchasedByProduct(self, productId):
+		purchases = self.getPurchasesByProduct(productId)
+		total = 0
+		for purchase in purchases:
+			total += purchase.quantity
+		return total
+
+	def getItensSoldByProduct(self, productId):
 		sales = self.getSalesByProduct(productId)
 		total = 0
 		for sale in sales:
-			total += sale.total()
+			total += sale.quantity
+		return total
+
+	def getTotalSoldByProduct(self, productId):
+		product = self.getProductById(productId)
+		sales = self.getSalesByProduct(productId)
+		total = 0
+		for sale in sales:
+			total += sale.total(product.sellPrice)
 		return total
 
 	def getStockByProduct(self, productId):
@@ -69,9 +85,9 @@ class Inventory:
 		sales = self.getSalesByProduct(productId)
 		purchases = self.getPurchasesByProduct(productId)
 		for sale in sales:
-			stock += sale.quantity
+			stock -= sale.quantity
 		for purchase in purchases:
-			stock -= purchase.quantity
+			stock += purchase.quantity
 		return stock
 
 	def getSalesByClient(self, clientId):
@@ -81,6 +97,7 @@ class Inventory:
 			if sale.clientId == clientId:
 				clientSales.append(sale)
 		return clientSales
+
 	def getPurchasesBySupplier(self, supplierId):
 		purchases = self.getPurchases()
 		supplierPurchases = []

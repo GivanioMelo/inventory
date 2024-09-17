@@ -37,7 +37,7 @@ def addProduct(inventory:Inventory):
 
 def updateProduct(inventory:Inventory):
 	clearScreen()
-	drawBox(1,27,120,3,DARK_GRAY)
+	drawInfoBox()
 
 	printTitle(" Updating product ", BLUE, WHITE)
 	drawEditField("Product Id:", line=4, boxColor=BLUE, textColor=WHITE)
@@ -69,34 +69,66 @@ def updateProduct(inventory:Inventory):
 	input()
 
 def deleteProduct(inventory:Inventory):
-	drawBox(21,10,100,3,DARK_GRAY)
+	clearScreen()
+	printTitle(" Deleting product ",BLUE, WHITE)
+	drawEditField("Product Id:", line=4, boxColor=BLUE, textColor=WHITE)
+	drawInfoBox()
 
-	print("Deleting product")
-	id = input("Product ID: ")
+	gotoxy(22,5); id = int(input())
+	selectedProduct = inventory.getProductById(id)
+	if selectedProduct is None:
+		drawInfoBox("ERROR: Product doesn't exist!",RED)
+		input()
+		return
 
 	inventory.deleteSalesByProduct(id)
 	inventory.deletePurchasesByProduct(id)
 	inventory.deleteProduct(id)
-
+	
+	drawInfoBox("SUCCESS: All Product data was removed! Press ENTER to proceed...", GREEN)
 	input()
 
 def printProductDetails(inventory:Inventory):
-	print("Printing product details")
-	id = input("Product ID: ")
-	product = inventory.getProductById(id)
-	print(product)
-	
-	print("Sales:")
-	sales = inventory.getSalesByProduct(id)
-	for sale in sales:
-		print(sale)
-	print("Total sold: ", inventory.getTotalSoldByProduct(id))
+	clearScreen()
+	printTitle(" Printing product details ", BLUE, WHITE)
+	drawEditField("Product Id:", line=4, boxColor=BLUE, textColor=WHITE)
+	drawInfoBox()
 
-	print("Purchases:")
+	gotoxy(22,5); id = int(input())
+	selectedProduct = inventory.getProductById(id)
+	if selectedProduct is None:
+		drawInfoBox("ERROR: Product doesn't exist!",RED)
+		input()
+		return
+
+	drawBox(1,7,120,19, BLUE)
+	product:Product = selectedProduct
+
+	gotoxy(2,8); printBlue("Name: ",end=""); print(product.name)
+	gotoxy(32,8); printBlue("Buy Price: ",end=""); print(f"R$ {product.buyPrice:.2f}")
+	gotoxy(62,8); printBlue("Sell Price: ",end=""); print(f"R$ {product.sellPrice:.2f}")
+	gotoxy(92,8); printBlue("Stock: ",end=""); print(f"{inventory.getStockByProduct(id)}")
+	#from here, as we are using loops, 
+	# i'm gonna count and save the current printing line
+	line = 9
+
 	purchases = inventory.getPurchasesByProduct(id)
+	gotoxy(2,line); printBlue("Purchases: ", end=""); print(len(purchases))
+	gotoxy(32,line); printBlue("Total Purchased: ", end=""); print(inventory.getItensPurchasedByProduct(id))
+	gotoxy(62,line); printBlue("Expenses: ", end=""); print(f"R$ {inventory.getTotalSpentByProduct(id):.2f}")
+	line += 1
 	for purchase in purchases:
-		print(purchase)
-	print("Total spent: ", inventory.getTotalSpentByProduct(id))
-	print("Stock: ", inventory.getStockByProduct(id))
+		gotoxy(5,line)
+		printLightGray(f"[{purchase.id}] {purchase.date}: {purchase.quantity} itens from {purchase.supplierId}([SupplierName]) with {purchase.discount:.2f}% discount")
+		line+=1
 
+	sales = inventory.getSalesByProduct(id)
+	gotoxy(2,line); printBlue("Sales: ", end=""); print(len(sales))
+	gotoxy(32,line); printBlue("Total Sold: ", end=""); print(inventory.getItensSoldByProduct(id))
+	gotoxy(62,line); printBlue("Receipt: ", end=""); print(f"R$ {inventory.getTotalSoldByProduct(id):.2f}")
+	line +=1
+	for sale in sales:
+		gotoxy(5,line)
+		printLightGray(f"[{sale.id}] {sale.date}: {sale.quantity} items to {sale.clientId}([ClientName]) with {sale.discount:.2f}% discount")
+		line += 1
 	input()

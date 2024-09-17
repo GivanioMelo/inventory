@@ -9,6 +9,7 @@ class PurchaseFileRepository(FileRepository):
 		with open(self.fileName, "r") as f:
 			for line in f:
 				purchases.append(Purchase.fromString(line))
+		return purchases
 	def saveAll(self, purchases):
 		with open(self.fileName, "w") as f:
 			for purchase in purchases:

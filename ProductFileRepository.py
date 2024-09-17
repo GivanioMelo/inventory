@@ -11,6 +11,7 @@ class ProductFileRepository(FileRepository):
 			for line in f:
 				products.append(Product.fromString(line))
 		return products
+
 	def saveAll(self, data):
 		with open(self.fileName, "w") as f:
 			for product in data:

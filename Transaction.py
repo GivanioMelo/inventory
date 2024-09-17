@@ -6,5 +6,5 @@ class Transaction:
 		self.quantity = quantity
 		self.discount = discount
 	
-	def total(self):
-			return self.quantity * (self.productId.sellPrice - self.discount)
+	def total(self, price = 0.0):
+			return self.quantity * (price - self.discount)
