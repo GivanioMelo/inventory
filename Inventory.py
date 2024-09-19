@@ -21,18 +21,33 @@ class Inventory:
 	def addProduct(self, product): self.products.add(product)
 	def addSale(self, sale): self.sales.add(sale)
 	def addPurchase(self, purchase): self.purchases.add(purchase)
+	def addSupplier(self, supplier): self.suppliers.add(supplier)
+	def addClient(self, client): self.clients.add(client)
+
 	def updateProduct(self, product): self.products.update(product)
 	def updateSale(self, sale): self.sales.update(sale)
 	def updatePurchase(self, purchase): self.purchases.update(purchase)
+	def updateSupplier(self, supllier): self.suppliers.update(supllier)
+	def updateClient(self, client): self.clients.update(client)
+	
 	def deleteProduct(self, id): self.products.delete(id)
 	def deleteSale(self, id): self.sales.delete(id)
 	def deletePurchase(self, id): self.purchases.delete(id)
+	def deleteSupplier(self, id): self.suppliers.delete(id)
+	def deleteClient(self, id): self.clients.delete(id)
+	
 	def getProducts(self): return self.products.getAll()
 	def getSales(self): return self.sales.getAll()
 	def getPurchases(self): return self.purchases.getAll()
+	def getSuppliers(self): return self.suppliers.getAll()
+	def getClients(self): return self.clients.getAll()	
+	
 	def getProductById(self, id): return self.products.getById(id)
 	def getSaleById(self, id): return self.sales.getById(id)
 	def getPurchaseById(self, id): return self.purchases.getById(id)
+	def getClientById(self, id): return self.clients.getById(id)
+	def getSupplierById(self, id): return self.suppliers.getById(id)
+
 
 	def getSalesByProduct(self, productId):
 		sales = self.getSales()
@@ -105,11 +120,3 @@ class Inventory:
 			if purchase.supplierId == supplierId:
 				supplierPurchases.append(purchase)
 		return supplierPurchases
-
-	def getClientById(self, clientId):
-		client = self.clients.getById(clientId)
-		return client
-
-	def getSupplierById(self, supplierId):
-		supplier = self.suppliers.getById(supplierId)
-		return supplier

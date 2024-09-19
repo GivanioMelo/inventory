@@ -6,7 +6,7 @@ class Purchase(Transaction):
 		self.supplierId = supplierId
 	def fromString(string):
 		id, date, supplierId, productId, quantity, discount = string.split(",")
-		return Purchase(int(id), date, int(supplierId), int(productId), float(quantity), float(discount))
+		return Purchase(int(id), date.strip(), int(supplierId), int(productId), float(quantity), float(discount))
 	
 	def __str__(self):
 		return f"{self.id}, {self.date}, {self.supplierId}, {self.productId}, {self.quantity}, {self.discount}"

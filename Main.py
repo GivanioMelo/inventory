@@ -14,7 +14,7 @@ def drawScreen():
 
 	drawBox(1,4,24,7,BLUE)
 	gotoxy(2,4); print(" Products ")
-	gotoxy(3,5); printBlue("01 - List All ")
+	gotoxy(3,5); printBlue("01 - List All")
 	gotoxy(3,6); printBlue("02 - Add New")
 	gotoxy(3,7); printBlue("03 - Update")
 	gotoxy(3,8); printBlue("04 - Delete ")
@@ -22,7 +22,7 @@ def drawScreen():
 	
 	drawBox(25,4,24,7,RED)
 	gotoxy(26,4); print(" Clients ")
-	gotoxy(26,5); printRed("11 - List All ")
+	gotoxy(26,5); printRed("11 - List All")
 	gotoxy(26,6); printRed("12 - Add New")
 	gotoxy(26,7); printRed("13 - Update")
 	gotoxy(26,8); printRed("14 - Delete ")
@@ -30,7 +30,7 @@ def drawScreen():
 
 	drawBox(49,4,24,7,YELLOW)
 	gotoxy(50,4); print(" Suppliers ")
-	gotoxy(51,5); printYellow("21 - List All ")
+	gotoxy(51,5); printYellow("21 - List All")
 	gotoxy(51,6); printYellow("22 - Add New")
 	gotoxy(51,7); printYellow("23 - Update")
 	gotoxy(51,8); printYellow("24 - Delete ")
@@ -38,13 +38,13 @@ def drawScreen():
 
 	drawBox(73,4,24,7,BRIGHT_MAGENTA)
 	gotoxy(74,4); print("Sales")
-	gotoxy(75,5); printBrightMagenta("31 - List All ")
+	gotoxy(75,5); printBrightMagenta("31 - List All")
 	gotoxy(75,6); printBrightMagenta("32 - Add New")
 	gotoxy(75,7); printBrightMagenta("33 - Cancel")
 	
 	drawBox(97,4,24,7,BRIGHT_CYAN)
 	gotoxy(98,4); print("Purchases")
-	gotoxy(99,5); printBrightCyan("41 - List All ")
+	gotoxy(99,5); printBrightCyan("41 - List All")
 	gotoxy(99,6); printBrightCyan("42 - Add New")
 	gotoxy(99,7); printBrightCyan("43 - Cancel")
 

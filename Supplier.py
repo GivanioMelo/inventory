@@ -6,7 +6,11 @@ class Supplier(Contact):
 
 	def fromString(string):
 		id, name, email, phone = string.split(", ")
-		return Supplier(int(id), name, email, phone)
+		return Supplier(
+            int(id.strip()),
+            name.strip(),
+            email.strip(),
+            phone.strip())
 
 	def __str__(self):
 		return f"{self.id}, {self.name}, {self.email}, {self.phone}"

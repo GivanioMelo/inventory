@@ -108,6 +108,26 @@ def drawBroadBorderBox(x,y,w,h, color=WHITE):
                 elif j == y+h-1: print('▄')
             print(RESET,end="")
 
+def drawRoundBorderBox(x,y,w,h, color=WHITE):
+    if (w <= 1) : return
+    if (h <=1) : return
+    for i in range(x , x + w):
+        for j in range(y , y + h):
+            gotoxy(i,j)
+            print(color,end="")
+            if i == x:
+                if j == y: print('╭')
+                elif j == y+h-1: print('╰')
+                else: print('│')
+            elif i == x+w-1:
+                if j == y: print('╮')
+                elif j < y+h-1: print('│')
+                else: print('╯')
+            else:
+                if j == y: print('─')
+                elif j == y+h-1: print('─')
+            print(RESET,end="")
+
 def printTitle(text:str, boxColor = WHITE, textColor = WHITE):
 	x = 60 - (int(len(text)/2))
 	drawBox(1,1,120,3,boxColor)
@@ -124,3 +144,32 @@ def drawInfoBox(text:str = "", textColor = WHITE):
 	drawBox(1,27,120,3,DARK_GRAY)
 	gotoxy(2,28)
 	printColored(text, textColor, end="")
+
+def inputxy(x:int, y:int, message:str) -> str:
+    gotoxy(x,y)
+    value = input(message)
+    return value
+
+def assureInput(message:str) -> str:
+    while True:
+        value = input(message)
+        if value == "": print("Invalid Input, Try Again...")
+        else: return value
+
+def assureInputxy(x:int, y:int, message:str) -> str:
+    while True:
+        gotoxy(x,y)
+        value = input(message)
+        if value != "": return value
+
+def inputIntxy(x:int, y:int, message:str) -> int:
+    while True:
+        gotoxy(x,y)
+        try: value = int(input(message)); return value
+        except: pass
+
+def inputFloatxy(x:int, y:int, message:str) -> float:
+    while True:
+        gotoxy(x,y)
+        try: value = float(input(message)); return value
+        except: pass

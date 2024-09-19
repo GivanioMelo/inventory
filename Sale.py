@@ -7,7 +7,7 @@ class Sale(Transaction):
 	
 	def fromString(string):
 		id, date, clientId, productId, quantity, discount = string.split(", ")
-		return Sale(int(id), date, int(clientId), int(productId), float(quantity), float(discount))
+		return Sale(int(id), date.strip(), int(clientId), int(productId), float(quantity), float(discount))
 	
 	def __str__(self):
 		return f"{self.id}, {self.date}, {self.clientId}, {self.productId}, {self.quantity}, {self.discount}"

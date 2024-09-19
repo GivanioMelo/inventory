@@ -7,13 +7,15 @@ from Inventory import Inventory
 from Supplier import Supplier
 from TextUtils import *
 
+themeColor = BLUE
+
 def listProducts(inventory:Inventory):
 	clearScreen()
-	printTitle(" Listing products ", BLUE, WHITE)
+	printTitle(" Listing products ", themeColor, WHITE)
 
 	products = inventory.getProducts()
 	h = len(products) + 3
-	drawBox(1,4,120,h,BLUE)
+	drawBox(1,4,120,h,themeColor)
 	gotoxy(2,5); printBrightBlue(f"{'Id':5} | {'Name':50} |    {'Buy price':10} |    {'Sell Price':10}")
 	for i in range(len(products)):
 		p:Product = products[i]
@@ -22,15 +24,18 @@ def listProducts(inventory:Inventory):
 
 def addProduct(inventory:Inventory):
 	clearScreen()
-	printTitle(" Adding new product ", BLUE, WHITE)
-	drawEditField("Name: ", line=4, boxColor=BLUE, textColor=WHITE)
-	drawEditField("Buy Price (R$): ", line=7, boxColor=BLUE, textColor=WHITE)
-	drawEditField("Sell Price (R$): ", line=10, boxColor=BLUE, textColor=WHITE)
+	printTitle(" Adding new product ", themeColor, WHITE)
+	drawEditField("Name: ", line=4, boxColor=themeColor, textColor=WHITE)
+	drawEditField("Buy Price (R$): ", line=7, boxColor=themeColor, textColor=WHITE)
+	drawEditField("Sell Price (R$): ", line=10, boxColor=themeColor, textColor=WHITE)
 	drawInfoBox()
 
 	gotoxy(22,5);  name = input()
+	if name == "": drawInfoBox("Invalid Input!", RED); input(); return
 	gotoxy(22,8);  buyPrice = float(input())
+	if buyPrice == "": drawInfoBox("Invalid Input!", RED); input(); return
 	gotoxy(22,11); sellPrice = float(input())
+	if sellPrice == "": drawInfoBox("Invalid Input!", RED); input(); return
 
 	product = Product(0, name, buyPrice, sellPrice)
 	inventory.addProduct(product)
@@ -41,11 +46,11 @@ def updateProduct(inventory:Inventory):
 	clearScreen()
 	drawInfoBox()
 
-	printTitle(" Updating product ", BLUE, WHITE)
-	drawEditField("Product Id:", line=4, boxColor=BLUE, textColor=WHITE)
-	drawEditField("Name: ", line=7, boxColor=BLUE, textColor=WHITE)
-	drawEditField("Buy price: ", line=10, boxColor=BLUE, textColor=WHITE) 
-	drawEditField("Sell price: ", line=13, boxColor=BLUE, textColor=WHITE)
+	printTitle(" Updating product ", themeColor, WHITE)
+	drawEditField("Product Id:", line=4, boxColor=themeColor, textColor=WHITE)
+	drawEditField("Name: ", line=7, boxColor=themeColor, textColor=WHITE)
+	drawEditField("Buy price: ", line=10, boxColor=themeColor, textColor=WHITE) 
+	drawEditField("Sell price: ", line=13, boxColor=themeColor, textColor=WHITE)
 
 	productExists = False
 
@@ -72,8 +77,8 @@ def updateProduct(inventory:Inventory):
 
 def deleteProduct(inventory:Inventory):
 	clearScreen()
-	printTitle(" Deleting product ",BLUE, WHITE)
-	drawEditField("Product Id:", line=4, boxColor=BLUE, textColor=WHITE)
+	printTitle(" Deleting product ",themeColor, WHITE)
+	drawEditField("Product Id:", line=4, boxColor=themeColor, textColor=WHITE)
 	drawInfoBox()
 
 	gotoxy(22,5); id = int(input())
@@ -92,8 +97,8 @@ def deleteProduct(inventory:Inventory):
 
 def printProductDetails(inventory:Inventory):
 	clearScreen()
-	printTitle(" Printing product details ", BLUE, WHITE)
-	drawEditField("Product Id:", line=4, boxColor=BLUE, textColor=WHITE)
+	printTitle(" Printing product details ", themeColor, WHITE)
+	drawEditField("Product Id:", line=4, boxColor=themeColor, textColor=WHITE)
 	drawInfoBox()
 
 	gotoxy(22,5); id = int(input())
@@ -103,7 +108,7 @@ def printProductDetails(inventory:Inventory):
 		input()
 		return
 
-	drawBox(1,7,120,19, BLUE)
+	drawBox(1,7,120,19, themeColor)
 	product:Product = selectedProduct
 
 	gotoxy(2,8); printBlue("Name: ",end=""); print(product.name)
