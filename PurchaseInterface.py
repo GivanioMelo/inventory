@@ -19,7 +19,7 @@ def listPurchases(inventory:Inventory):
 		p:Purchase = purchases[i]
 		s:Supplier = inventory.getSupplierById(p.supplierId)
 		pr:Product = inventory.getProductById(p.productId)
-		gotoxy(1,5+i); print(f"{str(p.id):3} {p.date:10} {s.name:30} {pr.name:30} {str(p.quantity):10} {f"{p.discount}%":10} {p.total(pr.sellPrice):.2f}")
+		gotoxy(1,5+i); print(f"{str(p.id):3} {p.date:10} {s.name:30} {pr.name:30} {str(p.quantity):10} {f"{p.discount}%":10} {p.total(pr.buyPrice):.2f}")
 	input()
 
 def addPurchase(inventory:Inventory):

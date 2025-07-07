@@ -5,9 +5,10 @@ class Product:
 		self.buyPrice = buyPrice
 		self.sellPrice = sellPrice
 	
-	def fromString(string):
+	@classmethod
+	def fromString(cls, string):
 		id, name, buyPrice, sellPrice = string.split(", ")
-		return Product(int(id), name, float(buyPrice), float(sellPrice))
+		return cls(int(id), name, float(buyPrice), float(sellPrice))
 	
 	def __str__(self):
 		return f"{self.id}, {self.name}, {self.buyPrice}, {self.sellPrice}"

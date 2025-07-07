@@ -1,6 +1,12 @@
+import os
+
 class FileRepository:
 	def __init__(self, fileName):
 		self.fileName = fileName
+		if not os.path.exists(fileName):
+			f = open(fileName, "w")
+			f.write("")
+			f.close()
 
 	def getNextId(self):
 		with open(self.fileName, "r") as f:
